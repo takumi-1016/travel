@@ -11,6 +11,57 @@
   </head>
 
   <body>
+  
+
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-left-nav">
+          <%= link_to root_path do %>
+            <%= image_tag 'https://presite-potepancamp-rails-02.herokuapp.com/assets/logo.png', alt: 'Poteshare' %>
+          <% end %>
+          <form action="https://presite-potepancamp-rails-02.herokuapp.com/rooms/search" accept-charset="UTF-8" method="get">
+            <div class="header-sharch d-lg-inline-block d-none">
+              <input type="text" name="area" id="area" value="" class="form-control" placeholder="エリア">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="header-sharch d-lg-inline-block d-none">
+              <input type="text" name="keyword" id="keyword" value="" class="form-control" placeholder="キーワード">
+              <i class="fas fa-search"></i>
+            </div>
+            <input type="submit" name="commit" value="" class="d-none" data-disable-with="">
+          </form>
+        </div>
+        <div class="header-right-nav">
+          
+          <% if user_signed_in? %>
+            <div class = "user_login">
+              <div class = "user_name">
+                <%= current_user.user_name%>
+              </div>
+              <div class = "user_image">
+                <% if current_user.user_image.blank? %>
+                  <%=image_tag 'https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_1.png'%>
+                <% else %>
+                 <%= image_tag current_user.user_image %>
+                <% end %>
+              </div>
+              <ul class="header-nav-menu">
+                <li><%= link_to "LogOut", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </div>
+          <% else %>
+          <div class="nav-item">
+            <%= link_to "LogIn", new_user_session_path %>
+            <%= link_to "SignUp", new_user_registration_path %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class = "notifications">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    </div>
     <%= yield %>
   </body>
 </html>
